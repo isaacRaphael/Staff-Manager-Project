@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using StaffManagement.Models;
 using StaffManagement.Contracts;
 using StaffManagement.Repositories;
+using StaffManagement.Services;
 
 namespace StaffManagement
 {
@@ -40,6 +41,12 @@ namespace StaffManagement
             }
                 ).AddEntityFrameworkStores<AppDbContext>();
             services.AddScoped<IStaffRepository, StaffRepository>();
+            services.AddSingleton<IEmailService>(x => new EmailService(
+                Configuration.GetSection("smtp")["email"], 
+                Configuration.GetSection("smtp")["password"],
+                Configuration.GetSection("smtp")["host"]
+                )
+            );
             services.ConfigureApplicationCookie(options => options.AccessDeniedPath = "/Unauthorized/Denied");
         }
 

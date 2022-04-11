@@ -15,16 +15,18 @@ namespace StaffManagement.Controllers
         private readonly IStaffRepository _staffRepository;
         private readonly SignInManager<Staff> _signInManager;
         private readonly UserManager<Staff> _userManager;
+        private readonly IEmailService _emailSender;
 
         public StaffController(IStaffRepository staffRepository,
                                 SignInManager<Staff> signInManager,
-                                 UserManager<Staff> userManager
-
+                                 UserManager<Staff> userManager,
+                                 IEmailService emailSender
                                 )
         {
             _staffRepository = staffRepository;
             _signInManager = signInManager;
             _userManager = userManager;
+            _emailSender = emailSender;
         }
         //Login-Get
         public IActionResult Login()
@@ -94,6 +96,9 @@ namespace StaffManagement.Controllers
                 ModelState.AddModelError("", "Unable to create user");
                 return View(model);
             }
+
+            var content = new EmailModel() { To = model.Email, Subject = "Your account has been successfully created" };
+            var sendEmail = await _emailSender.SendLoginCredential(content, model.UserName, model.Password);
 
             await _signInManager.SignInAsync(newUser, false);
 
