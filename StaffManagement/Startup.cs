@@ -47,6 +47,10 @@ namespace StaffManagement
                 Configuration.GetSection("smtp")["host"]
                 )
             );
+            services.AddScoped<IImageService>(x => new ImageService(
+                Configuration.GetSection("Cloudinary")["Name"],
+                Configuration.GetSection("Cloudinary")["Key"],
+                Configuration.GetSection("Cloudinary")["Secret"]));
             services.ConfigureApplicationCookie(options => options.AccessDeniedPath = "/Unauthorized/Denied");
         }
 
