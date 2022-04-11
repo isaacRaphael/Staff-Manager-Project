@@ -134,5 +134,54 @@ namespace StaffManagement.Controllers
 
             return RedirectToAction("Index");
         }
+        public IActionResult SendPasswordResetLink()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult SendPasswordResetLink(string email)
+        {
+            return Ok();
+            var user = _userManager.FindByEmailAsync(email).Result;
+
+            if (user == null || !(_userManager.IsEmailConfirmedAsync(user).Result))
+            {
+                ViewBag.Message = "Error while reseting password";
+
+            }
+            var token = _userManager.GeneratePasswordResetTokenAsync(user).Result;
+            var resetLink = Url.Action("ResetPassword", "Account", new { token = token }, protocol: HttpContext.Request.Scheme);
+
+            // code to send the email
+
+            // code to send the email ends
+
+            ViewBag.Message = $"a password reset link has been sent to your { email}";
+            return View();
+        }
+        public IActionResult ResetPassword(string token)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ResetPassword(ResetPasswordViewModel obj)
+        {
+            var user = _userManager.FindByEmailAsync(obj.UserName).Result;
+
+            IdentityResult result = _userManager.ResetPasswordAsync(user, obj.Token, obj.Password).Result;
+
+            if (result.Succeeded)
+            {
+                ViewBag.Message = "Password reset successful";
+                return View("Login");
+            }
+            else
+            {
+                ViewBag.Message = "Error while resetting the password";
+                return View("Login");
+            }
+        }
     }
+
 }
