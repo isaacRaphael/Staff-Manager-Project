@@ -7,6 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using System.IO;
 
 namespace StaffManagement.Controllers
 {
@@ -65,10 +68,36 @@ namespace StaffManagement.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            string imgUrl = "";
             if (!ModelState.IsValid)
             {
                 return View();
             }
+
+            if (model.Photo is not null)
+            {
+                var filePath = Path.GetTempFileName();
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    await model.Photo.CopyToAsync(stream);
+                }
+
+
+                var myAccount = new Account { ApiKey = "848314188379545", ApiSecret = "L9STxKQsLvitNYrdxBAhltnPLLk", Cloud = "dhfao0jm7" };
+                Cloudinary _cloudinary = new Cloudinary(myAccount);
+
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(filePath)
+                };
+
+                var uploadResult = await  _cloudinary.UploadAsync(uploadParams);
+                imgUrl = uploadResult.Url.AbsoluteUri;
+
+            }
+            
+
 
             var userWithEmail = _staffRepository.GetStaff(s => s.Email == model.Email);
             var userWithUserName = _staffRepository.GetStaff(s => s.UserName == model.UserName);
@@ -86,7 +115,8 @@ namespace StaffManagement.Controllers
                 UserName = model.UserName,
                 Email = model.Email,
                 JobTitle = model.JobTitle,
-                Department = model.Department
+                Department = model.Department,
+                PhotoPath = imgUrl
             };
 
             var result = await _userManager.CreateAsync(newUser, model.Password);
