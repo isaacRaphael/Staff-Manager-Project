@@ -32,6 +32,7 @@ namespace StaffManagement
         {
             services.AddControllersWithViews();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("default")));
+            //services.AddIdentity<Staff, IdentityRole>().AddDefaultTokenProviders();
             services.AddIdentity<Staff, IdentityRole>( options =>
             {
                 options.Password.RequiredLength = 5;
@@ -39,7 +40,8 @@ namespace StaffManagement
                 options.Password.RequireUppercase = false;
                 options.Password.RequireDigit = false;
             }
-                ).AddEntityFrameworkStores<AppDbContext>();
+                ).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+            
             services.AddScoped<IStaffRepository, StaffRepository>();
             services.AddSingleton<IEmailService>(x => new EmailService(
                 Configuration.GetSection("smtp")["email"], 
