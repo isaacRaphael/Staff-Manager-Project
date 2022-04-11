@@ -1,0 +1,154 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_LayoutBootstrap";
+}
+
+<section>
+    <div class="container">
+        <form method="post" class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-9">
+
+                <h1 class="text-black mb-4">Register Staff</h1>
+
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body">
+
+                        <div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="FirstName" class="mb-0"></label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input asp-for="FirstName" type="text" class="form-control form-control-lg" placeholder="First Name" />
+                                <span asp-validation-for="FirstName" class="text-danger" ></span>
+
+
+                            </div>
+                        </div>
+
+                        <hr class="mx-n3"><div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="LastName" class="mb-0"></label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input asp-for="LastName" type="text" class="form-control form-control-lg" placeholder="Last Name" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+
+
+                            </div>
+                        </div>
+                        <hr class="mx-n3"><div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="UserName" class="mb-0"></label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input asp-for="UserName" type="text" class="form-control form-control-lg" placeholder="User Name" />
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+
+
+                            </div>
+                        </div>
+
+                        <hr class="mx-n3">
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Email" class="mb-0"></label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input asp-for="Email" type="email" class="form-control form-control-lg" placeholder="example@example.com" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+
+
+                            </div>
+                        </div>
+                        <hr class="mx-n3"> 
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Password" class="mb-0"></label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input asp-for="Password" type="password" class="form-control form-control-lg" placeholder="Select a strong Password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <hr class="mx-n3"> 
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="ConfirmPassword" class="mb-0"></label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input asp-for="ConfirmPassword" type="password" class="form-control form-control-lg" placeholder="Confirm Password" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+
+                            </div>
+                        </div>
+                        <hr class="mx-n3">
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="JobTitle" class="mb-0"></label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input asp-for="JobTitle" class="form-control form-control-lg" placeholder="Job Title" />
+                                <span asp-validation-for="JobTitle" class="text-danger"></span>
+
+
+                            </div>
+                        </div>
+
+                        <hr class="mx-n3">
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="Department" class="mb-0"></label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input asp-for="Department" class="form-control form-control-lg" placeholder="Department" />
+                                <span asp-validation-for="Department" class="text-danger"></span>
+
+
+                            </div>
+                        </div>
+
+                        <hr class="mx-n3">
+
+                        <div class="px-5 py-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</section>
