@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace StaffManagement.Models
@@ -31,5 +32,8 @@ namespace StaffManagement.Models
         [DisplayName("Confirm Password")]
         [Compare("Password", ErrorMessage = "Password must match")]
         public string ConfirmPassword { get; set; }
+
+        [DisplayName("Upload Profile Picture...")]
+        public IFormFile Photo { get; set; }
     }
 }

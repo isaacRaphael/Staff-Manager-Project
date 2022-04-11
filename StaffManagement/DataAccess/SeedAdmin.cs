@@ -14,7 +14,7 @@ namespace StaffManagement.DataAccess
             UserManager<Staff> userManager)
         {
             var MainRole = "Admin";
-            dbContext.Database.EnsureCreated();
+            //dbContext.Database.EnsureCreated();
 
             if (!roleManager.Roles.Any())
                 await roleManager.CreateAsync(new IdentityRole(MainRole));
@@ -27,7 +27,8 @@ namespace StaffManagement.DataAccess
                     Email = "chukwuemeka@thebulb.com",
                     UserName = "jhay1",
                     FirstName = "Chukwuemeka",
-                    LastName = "Okereke"
+                    LastName = "Okereke",
+                    PhotoPath = ""
                 };
                 await userManager.CreateAsync(adminStaff, "1234567890abc");
                 await userManager.AddToRoleAsync(adminStaff, MainRole);
