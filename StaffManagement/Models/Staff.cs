@@ -14,6 +14,8 @@ namespace StaffManagement.Models
         public string JobTitle { get; set; }
         public string Department { get; set; }
 
+        public string PhotoPath { get; set; }
+
         //public int ImageNumber { get => new Random().Next(); }
 
 
