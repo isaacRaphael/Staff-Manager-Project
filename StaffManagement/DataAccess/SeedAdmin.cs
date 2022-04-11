@@ -14,7 +14,7 @@ namespace StaffManagement.DataAccess
             UserManager<Staff> userManager)
         {
             var MainRole = "Admin";
-            //dbContext.Database.EnsureCreated();
+            dbContext.Database.EnsureCreated();
 
             if (!roleManager.Roles.Any())
                 await roleManager.CreateAsync(new IdentityRole(MainRole));
