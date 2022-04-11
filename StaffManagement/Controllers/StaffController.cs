@@ -37,10 +37,20 @@ namespace StaffManagement.Controllers
             _imageService = imageService;
         }
         //Login-Get
-        public IActionResult Login()
+        public async  Task<IActionResult> Login()
         {
+            await _signInManager.SignOutAsync();
             return View();
         }
+        //Login-Get
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
+        }
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -114,6 +124,8 @@ namespace StaffManagement.Controllers
             };
 
             var result = await _userManager.CreateAsync(newUser, model.Password);
+            if (model.UserRole == "Admin")
+                await _userManager.AddToRoleAsync(newUser, model.UserRole);
 
             if (!result.Succeeded)
             {

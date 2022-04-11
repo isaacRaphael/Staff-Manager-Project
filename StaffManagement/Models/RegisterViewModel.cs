@@ -13,6 +13,10 @@ namespace StaffManagement.Models
         public string LastName { get; set; }
 
         [Required]
+        [DisplayName("User Role")]
+        public string UserRole { get; set; }
+
+        [Required]
         public string UserName { get; set; }
 
         [Required]
