@@ -28,36 +28,21 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
+
             }
             else
             {
                 <div class="col-md-3 card mt-5">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS16iuSg-r14_WgMsoXK_mPy2W4YsPThTp-Iw&usqp=CAU" class="card-img-top" alt="...">
+                    <img src="@item.PhotoPath " class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">@item.FirstName @item.LastName</h5>
                         <p class="card-text">@item.JobTitle</p>
                         <p class="card-text"><small class="text-muted"><a asp-action="" text-color="white">View details</a></small></p>
                     </div>
-=======
-        }
-        else
-        {
-            <div class="col-md-3 card mt-5">
-                <img src=@item.PhotoPath alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">@item.FirstName @item.LastName</h5>
-                    <p class="card-text">@item.JobTitle</p>
-                    <p class="card-text"><small class="text-muted"><a asp-action="" text-color="white">View details</a></small></p>
->>>>>>> 9c99ce1b6bd6dd11cd43d5e61b68d6ea798eb47d
                 </div>
-
             }
-
-
-
-
         }
+       
     </div>
 }
 else
