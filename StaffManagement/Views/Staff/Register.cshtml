@@ -73,6 +73,23 @@
 
                             </div>
                         </div>
+                        <hr class="mx-n3"><div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+
+                                <label asp-for="UserRole" class="mb-0"></label>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <select asp-for="UserRole" type="text" class="form-control form-control-lg">
+                                    <option value="Admin">Admin</option>
+                                    <option value="Staff">Staff</option>
+                                </Select>
+                                <span asp-validation-for="UserRole" class="text-danger"></span>
+
+
+                            </div>
+                        </div>
 
                         <hr class="mx-n3">
 
