@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <header>
@@ -34,11 +34,9 @@
                         
                             @if (_manager.IsSignedIn(User))
                             {
-                                <li class="nav-item ml-auto d-flex justify-content-center align-items-center">
-                                    <p class="nav-link text-white">Welcome @User.Identity.Name </p>
+                                <li class="nav-item ml-auto d-flex justify-content-center align-items-center w-50">
                                     <span><i class="text-white fa-solid fa-arrow-right-from-bracket mr-1"></i></span>
                                      <a class="nav-link text-white" asp-controller="Staff" asp-action="LogOut">Log Out</a>
-
                                 </li>
                                 
                             }
