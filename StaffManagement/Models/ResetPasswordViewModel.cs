@@ -9,7 +9,7 @@ namespace StaffManagement.Models
     public class ResetPasswordViewModel
     {
         [Required]
-        public string UserName { get; set; }
+        public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }

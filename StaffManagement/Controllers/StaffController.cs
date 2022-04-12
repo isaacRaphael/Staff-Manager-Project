@@ -21,20 +21,17 @@ namespace StaffManagement.Controllers
         private readonly SignInManager<Staff> _signInManager;
         private readonly UserManager<Staff> _userManager;
         private readonly IEmailService _emailSender;
-        private readonly IImageService _imageService;
 
         public StaffController(IStaffRepository staffRepository,
                                 SignInManager<Staff> signInManager,
                                  UserManager<Staff> userManager,
-                                 IEmailService emailSender,
-                                 IImageService imageService
+                                 IEmailService emailSender
                                 )
         {
             _staffRepository = staffRepository;
             _signInManager = signInManager;
             _userManager = userManager;
             _emailSender = emailSender;
-            _imageService = imageService;
         }
         //Login-Get
         public IActionResult Login()
@@ -96,7 +93,18 @@ namespace StaffManagement.Controllers
                 {
                     await model.Photo.CopyToAsync(stream);
                 }
-                imgUrl = await  _imageService.AddImage(filePath);
+
+
+                var myAccount = new Account { ApiKey = "848314188379545", ApiSecret = "L9STxKQsLvitNYrdxBAhltnPLLk", Cloud = "dhfao0jm7" };
+                Cloudinary _cloudinary = new Cloudinary(myAccount);
+
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(filePath)
+                };
+
+                var uploadResult = await  _cloudinary.UploadAsync(uploadParams);
+                imgUrl = uploadResult.Url.AbsoluteUri;
 
             }
             
@@ -179,29 +187,7 @@ namespace StaffManagement.Controllers
             
             return View();
         }
-        public IActionResult ResetPassword(string token)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult ResetPassword(ResetPasswordViewModel obj)
-        {
-            var user = _userManager.FindByEmailAsync(obj.UserName).Result;
-
-            IdentityResult result = _userManager.ResetPasswordAsync(user, obj.Token, obj.Password).Result;
-
-            if (result.Succeeded)
-            {
-                ViewBag.Message = "Password reset successful";
-                return View("Login");
-            }
-            else
-            {
-                ViewBag.Message = "Error while resetting the password";
-                return View("Login");
-            }
-        }
+       
     }
 
 }
