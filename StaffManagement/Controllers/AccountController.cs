@@ -31,21 +31,28 @@ namespace StaffManagement.Controllers
         }
 
         [HttpPost]
-        public IActionResult ResetPassword(ResetPasswordViewModel obj)
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel obj)
         {
-            var user = _userManager.FindByEmailAsync(obj.UserName).Result;
-
-            IdentityResult result = _userManager.ResetPasswordAsync(user, obj.Token, obj.Password).Result;
-
+            var user = _userManager.FindByEmailAsync(obj.Email).Result;
+            IdentityResult result = null;
+            try
+            {
+              result = await _userManager.ResetPasswordAsync(user, obj.Token, obj.Password);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
             if (result.Succeeded)
             {
                 ViewBag.Message = "Password reset successful";
-                return View("Login");
+                return RedirectToAction("Login","Staff");
             }
             else
             {
                 ViewBag.Message = "Error while resetting the password";
-                return View("Login");
+                return View(obj);
             }
         }
     }
