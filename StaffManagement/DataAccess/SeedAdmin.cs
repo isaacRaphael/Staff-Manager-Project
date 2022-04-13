@@ -28,7 +28,7 @@ namespace StaffManagement.DataAccess
                     UserName = "jhay1",
                     FirstName = "Chukwuemeka",
                     LastName = "Okereke",
-                    PhotoPath = ""
+                    PhotoPath = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSMYxFH6FBmjVC4NZEENL6vHCDbj-ZGEVj9g&usqp=CAU"
                 };
                 await userManager.CreateAsync(adminStaff, "1234567890abc");
                 await userManager.AddToRoleAsync(adminStaff, MainRole);

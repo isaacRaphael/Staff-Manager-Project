@@ -34,9 +34,8 @@ namespace StaffManagement.Controllers
             _emailSender = emailSender;
         }
         //Login-Get
-        public async  Task<IActionResult> Login()
+        public IActionResult Login()
         {
-            await _signInManager.SignOutAsync();
             return View();
         }
         //Login-Get
