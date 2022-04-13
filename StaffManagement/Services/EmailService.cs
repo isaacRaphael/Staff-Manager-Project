@@ -58,7 +58,7 @@ namespace StaffManagement.Services
 
         public async Task<bool> SendResetToKen(EmailModel content, string link)
         {
-            string body = $"<a href={link}>{link}</a>";
+            string body = $"<a href={link}>Your password reset link</a>";
 
             return await SendEmail(content, body);
         }
