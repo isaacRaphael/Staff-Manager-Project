@@ -48,6 +48,44 @@ namespace StaffManagement.Controllers
             return RedirectToAction("Login");
         }
 
+        public IActionResult Profile(string name)
+        {
+            var currentStaff = _staffRepository.GetStaff(x => x.UserName == name);
+
+            var model = new RegisterViewModel
+            {
+                FirstName = currentStaff.FirstName,
+                LastName = currentStaff.LastName,
+                UserName = currentStaff.UserName,
+                JobTitle = currentStaff.PhotoPath
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async  Task<IActionResult> PicChange(RegisterViewModel model)
+        {
+            var staff = _staffRepository.GetStaff(x => x.UserName == model.UserName);
+            var imgUrl = "";
+            if (model.Photo is not null)
+            {
+                var filePath = Path.GetTempFileName();
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    await model.Photo.CopyToAsync(stream);
+                }
+                var uploadResult = await _imageService.AddImage(filePath);
+                imgUrl = uploadResult;
+                await _staffRepository.ChangeStaffImage(staff, imgUrl);
+
+            }
+            return RedirectToAction("Index");
+
+            
+        }
+
 
 
         [HttpPost]

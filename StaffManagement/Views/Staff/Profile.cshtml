@@ -1,0 +1,72 @@
+﻿@model StaffManagement.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const file = document.querySelector(".file");
+        const btn = document.querySelector(".tt");
+        const btn2 = document.querySelector(".ff");
+        const div = document.querySelector(".custom-file")
+
+        const label = document.querySelector(".custom-file-label")
+        const input = document.querySelector(".custom-file-input")
+
+        input.addEventListener("change", () => {
+            var fileName = input.value.split("\\").pop();
+            label.innerText = fileName;
+        })
+
+        btn.addEventListener("click", () => {
+            btn2.classList.toggle("hide")
+            div.classList.toggle("hide")
+        });
+
+        btn2.addEventListener("click", () => {
+            console.log(file.value)
+        })
+
+    })
+</script>
+<style>
+    .hide {
+        display: none;
+    }
+</style>
+<div class="container">
+    <h1>Edit Profile</h1>
+
+    <div class="container d-flex border p-4 w-100">
+        <div class="w-25 d-flex flex-column justify-content-center align-items-center">
+            <img src=@Model.JobTitle class="img-fluid rounded" />
+        </div>
+        <div class="container ml-3">
+            <label>User Name</label>
+            <h4>@Model.UserName</h4>
+
+            <label>Full Name</label>
+            <h4>@Model.FirstName @Model.LastName</h4>
+            <div>
+                <div class="d-flex">
+                    <button class="btn btn-primary mt-1 tt">Change Profile Picture</button>
+                    <a asp-controller="Account" asp-action="ResetPasswordInApp" class="btn btn-primary mt-1 ml-2">Change Password</a>
+                </div>
+                <div class="d-flex mt-2  justify-content-start align-items-baseline">
+                    <form enctype="multipart/form-data" asp-action="PicChange" method="post">
+                        <div class="custom-file hide w-100">
+                            <input asp-for="UserName" type="text" readonly value=@Model.UserName hidden />
+                            <label asp-for="Photo" class="mb-0 custom-file-label"></label>
+                            <input asp-for="Photo" type="file" class="custom-file-input" />
+                        </div>
+                        <button type="submit" style="cursor: pointer" class=" btn text-white bg-success p1 hide ff mt-2">Update</button>
+
+                    </form>
+                    
+                </div>
+            </div>     
+        </div>
+    </div>
+</div>
+
+
