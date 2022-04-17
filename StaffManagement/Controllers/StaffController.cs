@@ -21,17 +21,20 @@ namespace StaffManagement.Controllers
         private readonly SignInManager<Staff> _signInManager;
         private readonly UserManager<Staff> _userManager;
         private readonly IEmailService _emailSender;
+        private readonly IImageService _imageService;
 
         public StaffController(IStaffRepository staffRepository,
                                 SignInManager<Staff> signInManager,
                                  UserManager<Staff> userManager,
-                                 IEmailService emailSender
+                                 IEmailService emailSender,
+                                 IImageService imageService
                                 )
         {
             _staffRepository = staffRepository;
             _signInManager = signInManager;
             _userManager = userManager;
             _emailSender = emailSender;
+            _imageService = imageService;
         }
         //Login-Get
         public IActionResult Login()
@@ -43,6 +46,44 @@ namespace StaffManagement.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
+        }
+
+        public IActionResult Profile(string name)
+        {
+            var currentStaff = _staffRepository.GetStaff(x => x.UserName == name);
+
+            var model = new RegisterViewModel
+            {
+                FirstName = currentStaff.FirstName,
+                LastName = currentStaff.LastName,
+                UserName = currentStaff.UserName,
+                JobTitle = currentStaff.PhotoPath
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async  Task<IActionResult> PicChange(RegisterViewModel model)
+        {
+            var staff = _staffRepository.GetStaff(x => x.UserName == model.UserName);
+            var imgUrl = "";
+            if (model.Photo is not null)
+            {
+                var filePath = Path.GetTempFileName();
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    await model.Photo.CopyToAsync(stream);
+                }
+                var uploadResult = await _imageService.AddImage(filePath);
+                imgUrl = uploadResult;
+                await _staffRepository.ChangeStaffImage(staff, imgUrl);
+
+            }
+            return RedirectToAction("Index");
+
+            
         }
 
 
@@ -93,23 +134,10 @@ namespace StaffManagement.Controllers
                 {
                     await model.Photo.CopyToAsync(stream);
                 }
-
-
-                var myAccount = new Account { ApiKey = "848314188379545", ApiSecret = "L9STxKQsLvitNYrdxBAhltnPLLk", Cloud = "dhfao0jm7" };
-                Cloudinary _cloudinary = new Cloudinary(myAccount);
-
-                var uploadParams = new ImageUploadParams()
-                {
-                    File = new FileDescription(filePath)
-                };
-
-                var uploadResult = await  _cloudinary.UploadAsync(uploadParams);
-                imgUrl = uploadResult.Url.AbsoluteUri;
+                var uploadResult = await  _imageService.AddImage(filePath);
+                imgUrl = uploadResult;
 
             }
-            
-
-
             var userWithEmail = _staffRepository.GetStaff(s => s.Email == model.Email);
             var userWithUserName = _staffRepository.GetStaff(s => s.UserName == model.UserName);
 

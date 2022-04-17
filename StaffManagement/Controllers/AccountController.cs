@@ -30,6 +30,32 @@ namespace StaffManagement.Controllers
             return View();
         }
 
+        public IActionResult ResetPasswordInApp()
+        {
+            var model = new ResetPasswordViewModel();
+            model.PasswordRest = false;
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ResetPasswordInApp(ResetPasswordViewModel model)
+        {
+            var user = await _userManager.FindByNameAsync(model.Username);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            IdentityResult result = null;
+            try
+            {
+                result = await _userManager.ResetPasswordAsync(user, token, model.Password);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            model.PasswordRest = true;
+            return View(model);
+        }
+
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel obj)
         {

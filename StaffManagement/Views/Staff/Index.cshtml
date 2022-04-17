@@ -8,7 +8,7 @@
 {   <div class="w-100 d-flex justify-content-between align-items-center">
         <h1 class="display-4 text-primary">Hi @User.Identity.Name</h1>
         
-            <a><i class="fa-solid fa-gear text-primary mr-2"></i>Profile</a>
+            <a asp-action="profile" asp-route-name=@User.Identity.Name style="cursor : pointer"><i class="fa-solid fa-gear text-primary mr-2"></i>Profile</a>
         
     </div>
     

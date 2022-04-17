@@ -24,7 +24,7 @@ namespace StaffManagement.Services
         {
 
             var myAccount = new Account { ApiKey = _Key, ApiSecret = _secret, Cloud = _Name };
-            Cloudinary _cloudinary = new Cloudinary(myAccount);
+            Cloudinary _cloudinary = new(myAccount);
 
             var uploadParams = new ImageUploadParams()
             {
