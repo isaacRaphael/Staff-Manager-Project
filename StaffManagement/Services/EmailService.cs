@@ -24,14 +24,11 @@ namespace StaffManagement.Services
             _password = password;
             _host = host;
         }
-        public async Task<bool> SendLoginCredential(EmailModel content, string username, string password)
+        
+
+        public async Task<bool> SendEmail(EmailModel content, string body)
         {
-            content.Body = $"<div>" +
-                $"<h4>WELCOME TO OUR STAFF MANAGEMENT SYSTEM</h4>" +
-                $"<h5>Your login credentials are as follow:</h5>" +
-                $"</div>" +
-                $"<div><strong>Username:</strong> {username}</div>" +
-                $"<div><strong>password:</strong> {password}</div>";
+            content.Body = body;
             var mail = new MailMessage();
             mail.To.Add(new MailAddress(content.To));
             mail.From = new MailAddress(_email);
@@ -50,13 +47,20 @@ namespace StaffManagement.Services
                     smtp.EnableSsl = true;
                     await smtp.SendMailAsync(mail);
                 }
-            } catch
+            }
+            catch
             {
                 return false;
             }
 
             return true;
+        }
 
+        public async Task<bool> SendResetToKen(EmailModel content, string link)
+        {
+            string body = $"<a href={link}>{link}</a>";
+
+            return await SendEmail(content, body);
         }
     }
 }

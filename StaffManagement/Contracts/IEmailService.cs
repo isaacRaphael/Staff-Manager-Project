@@ -5,6 +5,7 @@ namespace StaffManagement.Contracts
 {
     public interface IEmailService
     {
-        Task<bool> SendLoginCredential(EmailModel content, string username, string password);
+        Task<bool> SendEmail(EmailModel content, string body);
+        Task<bool> SendResetToKen(EmailModel content, string link);
     }
 }

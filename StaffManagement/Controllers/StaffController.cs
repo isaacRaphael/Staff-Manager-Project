@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
 
 namespace StaffManagement.Controllers
 {
@@ -36,6 +38,15 @@ namespace StaffManagement.Controllers
         {
             return View();
         }
+        //Login-Get
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
+        }
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -120,6 +131,8 @@ namespace StaffManagement.Controllers
             };
 
             var result = await _userManager.CreateAsync(newUser, model.Password);
+            if (model.UserRole == "Admin")
+                await _userManager.AddToRoleAsync(newUser, model.UserRole);
 
             if (!result.Succeeded)
             {
@@ -128,11 +141,53 @@ namespace StaffManagement.Controllers
             }
 
             var content = new EmailModel() { To = model.Email, Subject = "Your account has been successfully created" };
-            var sendEmail = await _emailSender.SendLoginCredential(content, model.UserName, model.Password);
+
+            string body = $"<div>" +
+                 $"<h4>WELCOME TO OUR STAFF MANAGEMENT SYSTEM</h4>" +
+                 $"<h5>Your login credentials are as follow:</h5>" +
+                 $"</div>" +
+                 $"<div><strong>Username:</strong> {model.UserName}</div>" +
+                 $"<div><strong>password:</strong> {model.Password}</div>";
+
+            var sendEmail = await _emailSender.SendEmail(content, body);
 
             await _signInManager.SignInAsync(newUser, false);
 
             return RedirectToAction("Index");
         }
+        public IActionResult SendPasswordResetLink()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SendPasswordResetLink(string email)
+        {
+            var user = _userManager.FindByEmailAsync(email).Result;
+            Console.WriteLine(user.FirstName);
+
+            if (user == null)
+            {
+                ViewBag.Message = "Error while reseting password";
+
+            } else
+            {
+                var token = _userManager.GeneratePasswordResetTokenAsync(user).Result;
+                var resetLink = Url.Action("ResetPassword", "Account", new { token = token }, protocol: HttpContext.Request.Scheme);
+
+                // code to send the email
+                var content = new EmailModel() { To = email, Subject = "Your password resent link from staff management" };
+                var sendEmail = await _emailSender.SendResetToKen(content, resetLink);
+
+
+
+                // code to send the email ends
+
+                ViewBag.Message = $"a password reset link has been sent to your { email}";
+            }
+            
+            return View();
+        }
+       
     }
+
 }
