@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "email not found";
+    Layout = "_Layout";
+}
+
+<section class="text-center email">
+    <img src="~/images/error.png" class="image" />
+    The email @ViewBag.Message does not exist
+</section>
+<section class="text-right">
+    <a asp-action="Login">Back to login</a>
+</section>

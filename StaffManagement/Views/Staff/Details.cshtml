@@ -1,0 +1,14 @@
+@model StaffManagement.Models.Staff
+
+
+<section class="details-section">
+    <img src="@Html.DisplayFor(model => model.PhotoPath)"/>
+    <div class=".details-div">
+        <h1>@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName) <small>(@Html.DisplayFor(model => model.UserName))</small></h1>
+        <p>Department: @Html.DisplayFor(model => model.Department)</p>
+        <p>Job Title: @Html.DisplayFor(model => model.JobTitle)</p>
+        <p>Email: @Html.DisplayFor(model => model.Email)</p>
+    </div>
+</section>
+
+

@@ -13,5 +13,6 @@ namespace StaffManagement.Contracts
         bool RemoveStaff(int id);
         Staff GetStaff(Expression<Func<Staff, bool>> predicate);
         IEnumerable<Staff> GetAllStaff();
+        Staff GetTheStaff(string Id);
     }
 }

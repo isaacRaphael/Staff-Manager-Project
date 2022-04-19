@@ -49,6 +49,10 @@ namespace StaffManagement
                 Configuration.GetSection("smtp")["host"]
                 )
             );
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromMinutes(30); // Sets the expiry to 30 minutes
+            });
             services.AddScoped<IImageService>(x => new ImageService(
                 Configuration.GetSection("Cloudinary")["Name"],
                 Configuration.GetSection("Cloudinary")["Key"],

@@ -46,7 +46,7 @@ namespace StaffManagement.Controllers
         }
 
 
-
+        // login - post
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -62,18 +62,31 @@ namespace StaffManagement.Controllers
             }
             return View(model);
         }
+
+        // index page
         public IActionResult Index()
         {
             var allStaffs = _staffRepository.GetAllStaff();
 
             return View(allStaffs);
         }
+
+        // user details
+        public IActionResult Details(string Id)
+        {
+            var Staff = _staffRepository.GetTheStaff(Id);
+            // Console.WriteLine(Staff.Email);
+            ViewBag.Message = "jjdsjd";
+            return View(Staff);
+        }
+
         [Authorize(Roles ="Admin")]
         // Action for the registration page
         public IActionResult Register()
         {
             return View();
         }
+
 
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -163,11 +176,11 @@ namespace StaffManagement.Controllers
         public async Task<IActionResult> SendPasswordResetLink(string email)
         {
             var user = _userManager.FindByEmailAsync(email).Result;
-            Console.WriteLine(user.FirstName);
 
             if (user == null)
             {
-                ViewBag.Message = "Error while reseting password";
+                ViewBag.Message = email;
+                return View("Error");
 
             } else
             {
@@ -182,7 +195,7 @@ namespace StaffManagement.Controllers
 
                 // code to send the email ends
 
-                ViewBag.Message = $"a password reset link has been sent to your { email}";
+                ViewBag.Message = $"a password reset link has been sent to {email}";
             }
             
             return View();

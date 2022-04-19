@@ -27,7 +27,13 @@ namespace StaffManagement.Repositories
         {
             return _db.Staffs.ToList();
         }
+        
+        public Staff GetTheStaff(string Id)
+        {
+            var staff = _db.Staffs.FirstOrDefault(staff => staff.Id == Id);
+            return staff;
 
+        }
         public Staff GetStaff(Expression<Func<Staff, bool>> predicate)
         {
             return _db.Staffs.AsQueryable().FirstOrDefault(predicate);
