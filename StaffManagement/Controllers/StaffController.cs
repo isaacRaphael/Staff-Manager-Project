@@ -104,11 +104,8 @@ namespace StaffManagement.Controllers
             return View(model);
         }
 
-<<<<<<< HEAD
-        // index page
-=======
+
         [Authorize(Roles ="Admin, User")]
->>>>>>> 324f4a64a11f38f5496757969823359355621b99
         public IActionResult Index()
         {
             var allStaffs = _staffRepository.GetAllStaff();
@@ -116,8 +113,6 @@ namespace StaffManagement.Controllers
             return View(allStaffs);
         }
 
-<<<<<<< HEAD
-        // user details
         public IActionResult Details(string Id)
         {
             var Staff = _staffRepository.GetTheStaff(Id);
@@ -126,8 +121,6 @@ namespace StaffManagement.Controllers
             return View(Staff);
         }
 
-=======
->>>>>>> 324f4a64a11f38f5496757969823359355621b99
         [Authorize(Roles ="Admin")]
         // Action for the registration page
         public IActionResult Register()
