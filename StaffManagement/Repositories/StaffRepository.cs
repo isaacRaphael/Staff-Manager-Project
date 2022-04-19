@@ -56,6 +56,12 @@ namespace StaffManagement.Repositories
             return changes > 0;
         }
 
+        public async Task<bool> UpdateStaff(Staff staff)
+        {
+           _db.Staffs.Update(staff);
+            var changes = await _db.SaveChangesAsync();
+            return changes > 0;
+        }
         
     }
 }

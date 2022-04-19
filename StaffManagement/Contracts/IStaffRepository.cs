@@ -14,6 +14,8 @@ namespace StaffManagement.Contracts
 
         Task<bool> ChangeStaffImage(Staff staff, string photopath);
 
+        Task<bool> UpdateStaff(Staff staff);
+
         Staff GetStaff(Expression<Func<Staff, bool>> predicate);
         IEnumerable<Staff> GetAllStaff();
     }
