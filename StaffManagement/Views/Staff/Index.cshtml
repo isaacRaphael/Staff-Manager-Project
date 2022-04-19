@@ -33,6 +33,10 @@
                         <p class="card-text">@item.JobTitle</p>
                         <p class="card-text"><small class="text-muted"><a asp-action="" text-color="white">View details</a></small></p>
                     </div>
+                    @if(User.IsInRole("Admin"))
+                    {
+                        <button class="btn btn-info">Edit Role</button>
+                    }
                 </div>
         }
        

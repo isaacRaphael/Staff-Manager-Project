@@ -103,12 +103,15 @@ namespace StaffManagement.Controllers
             }
             return View(model);
         }
+
+        [Authorize(Roles ="Admin, User")]
         public IActionResult Index()
         {
             var allStaffs = _staffRepository.GetAllStaff();
 
             return View(allStaffs);
         }
+
         [Authorize(Roles ="Admin")]
         // Action for the registration page
         public IActionResult Register()
