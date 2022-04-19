@@ -18,5 +18,8 @@ namespace StaffManagement.Models
         public string ConfirmPassword { get; set; }
         [Required]
         public string Token { get; set; }
+        public string Username { get; set; }
+
+        public bool PasswordRest { get; set; } 
     }
 }

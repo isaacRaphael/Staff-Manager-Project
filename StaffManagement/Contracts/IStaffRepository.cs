@@ -11,6 +11,11 @@ namespace StaffManagement.Contracts
     {
         bool AddStaff(Staff staff);
         bool RemoveStaff(int id);
+
+        Task<bool> ChangeStaffImage(Staff staff, string photopath);
+
+        Task<bool> UpdateStaff(Staff staff);
+
         Staff GetStaff(Expression<Func<Staff, bool>> predicate);
         IEnumerable<Staff> GetAllStaff();
         Staff GetTheStaff(string Id);

@@ -23,6 +23,16 @@ namespace StaffManagement.Repositories
             var changes = _db.SaveChanges();
             return changes > 0;
         }
+
+        public async Task<bool> ChangeStaffImage(Staff staff, string photopath)
+        {
+            var st = _db.Staffs.Find(staff.Id);
+            st.PhotoPath = photopath;
+            var changes = await _db.SaveChangesAsync();
+
+            return changes > 0;
+        }
+
         public IEnumerable<Staff> GetAllStaff()
         {
             return _db.Staffs.ToList();
@@ -51,5 +61,13 @@ namespace StaffManagement.Repositories
             var changes = _db.SaveChanges();
             return changes > 0;
         }
+
+        public async Task<bool> UpdateStaff(Staff staff)
+        {
+           _db.Staffs.Update(staff);
+            var changes = await _db.SaveChangesAsync();
+            return changes > 0;
+        }
+        
     }
 }
