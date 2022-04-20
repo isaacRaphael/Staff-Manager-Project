@@ -58,6 +58,7 @@
                             <input asp-for="UserName" type="text" readonly value=@Model.UserName hidden />
                             <label asp-for="Photo" class="mb-0 custom-file-label"></label>
                             <input asp-for="Photo" type="file" class="custom-file-input" />
+                            <span asp-validation-for="Photo"></span>
                         </div>
                         <button type="submit" style="cursor: pointer" class=" btn text-white bg-success p1 hide ff mt-2">Update</button>
 

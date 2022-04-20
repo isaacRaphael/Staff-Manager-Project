@@ -37,6 +37,7 @@ namespace StaffManagement.Models
         [Compare("Password", ErrorMessage = "Password must match")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
         [DisplayName("Upload Profile Picture...")]
         public IFormFile Photo { get; set; }
     }
