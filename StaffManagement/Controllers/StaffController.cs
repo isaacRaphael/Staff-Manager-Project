@@ -105,7 +105,7 @@ namespace StaffManagement.Controllers
         }
 
 
-        [Authorize(Roles ="Admin, User")]
+        [Authorize]
         public IActionResult Index()
         {
             var allStaffs = _staffRepository.GetAllStaff();
@@ -192,7 +192,7 @@ namespace StaffManagement.Controllers
 
             var sendEmail = await _emailSender.SendEmail(content, body);
 
-            await _signInManager.SignInAsync(newUser, false);
+            // await _signInManager.SignInAsync(newUser, false);
 
             return RedirectToAction("Index");
         }
