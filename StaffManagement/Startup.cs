@@ -15,6 +15,7 @@ using StaffManagement.Models;
 using StaffManagement.Contracts;
 using StaffManagement.Repositories;
 using StaffManagement.Services;
+using StaffManagement.DI;
 
 namespace StaffManagement
 {
@@ -28,11 +29,16 @@ namespace StaffManagement
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("default")));
-            //services.AddIdentity<Staff, IdentityRole>().AddDefaultTokenProviders();
+            if (env.IsDevelopment())
+            {
+              services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("default")));
+            } else
+            {
+                services.AddHerokuDb(Configuration);
+            }
             services.AddIdentity<Staff, IdentityRole>( options =>
             {
                 options.Password.RequiredLength = 5;
