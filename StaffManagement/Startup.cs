@@ -35,7 +35,8 @@ namespace StaffManagement
             if (env.IsDevelopment())
             {
               services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("default")));
-            } else
+            }
+            else
             {
                 services.AddHerokuDb(Configuration);
             }
