@@ -453,3 +453,10 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+
+## Asp.net core
+launchSettings.json
+appsettings.json
+
+
